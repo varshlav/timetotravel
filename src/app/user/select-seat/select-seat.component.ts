@@ -12,107 +12,105 @@ import { Subscription } from 'rxjs';
   templateUrl: './select-seat.component.html',
   styleUrls: ['./select-seat.component.css']
 })
-export class SelectSeatComponent implements OnInit ,OnDestroy{
-  @Input('bus') bus:Bus;
+export class SelectSeatComponent implements OnInit, OnDestroy {
+  @Input('bus') bus: Bus;
   @Output('closeModal') closeModal = new EventEmitter()
-showSeatList:Seat[]=[];
-total=0;
-fillupSeat=[];
-alert=false;
+  showSeatList: Seat[] = [];
+  total = 0;
+  fillupSeat = [];
+  alert = false;
 
-subscription:Subscription;
+  subscription: Subscription;
   constructor(
-    private route:Router,
-    private BusService:SelectBusService
+    private route: Router,
+    private BusService: SelectBusService
   ) { }
 
   ngOnInit() {
-this.getbookSeat();
+    this.getbookSeat();
   }
 
   Seat(e) {
-   let seats=[];
-   seats= this.showSeatList.map(iteam=>{
-     return iteam.seatNo
-   })
+    let seats = [];
+    seats = this.showSeatList.map(iteam => {
+      return iteam.seatNo
+    })
     let id = document.getElementById(e);
-  
-    if((this.fillupSeat.indexOf(String(e))<0) && (seats.indexOf(e)<0)){
-      if((this.showSeatList.length!=4)) {
-        id.innerHTML = `   <img src="../assets/img/fseat.png" alt="">`
-      
-        let seat={
-          seatNo:e,
-          fare:this.bus.fare,
-          seatClass:'economy'
+
+    if ((this.fillupSeat.indexOf(String(e)) < 0) && (seats.indexOf(e) < 0)) {
+      if ((this.showSeatList.length != 4)) {
+        id.innerHTML = `   <img src="assets/img/fseat.png" alt="">`
+
+        let seat = {
+          seatNo: e,
+          fare: this.bus.fare,
+          seatClass: 'economy'
         }
         this.totalFare(seat.fare);
         this.showList(seat);
       }
-      else{
-        this.alert=true;
+      else {
+        this.alert = true;
       }
     }
 
   }
 
-  showList(seat){
-      this.showSeatList.push(seat)
+  showList(seat) {
+    this.showSeatList.push(seat)
   }
 
-  totalFare(fare){
-    this.total+=fare;
+  totalFare(fare) {
+    this.total += fare;
   }
 
-  confirmJourney(){
-    let route:Journey_Route= JSON.parse(localStorage.getItem("route"))
+  confirmJourney() {
+    let route: Journey_Route = JSON.parse(localStorage.getItem("route"));
+    let seats = [];
+    seats = this.showSeatList.map(iteam => {
+      return iteam.seatNo
+    });
 
-    let seats=[];
-  seats= this.showSeatList.map(iteam=>{
-    return iteam.seatNo
-  });
+    let journey: Journey = {
+      bus: this.bus,
+      seats: seats,
+      fare: Number(this.total),
+      journey_route: route
+    }
 
-  let journey :Journey={
-    bus:this.bus,
-    seats:seats,
-    fare:Number(this.total),
-    journey_route:route
+    localStorage.setItem("journey", JSON.stringify(journey))
+    this.route.navigate(['user-form']);
+    this.closeModal.emit();
   }
 
-localStorage.setItem("journey",JSON.stringify(journey))
-this.route.navigate(['user-form']);
-this.closeModal.emit();
-  }
 
-
-  getbookSeat(){
-    
-    let route:Journey_Route= JSON.parse(localStorage.getItem("route"))
-    let busid=this.bus.$key;
+  getbookSeat() {
+    let route: Journey_Route = JSON.parse(localStorage.getItem("route"))
+    let busid = this.bus.$key;
     let key = String(new Date(route.date).getTime());
-    console.log(busid,key)
-    this.subscription=this.BusService.getFillupseat(key,busid)
-    .subscribe(res=>{
-      for(key in res){
-        for(let i in res[key].seats){
-          this.fillupSeat.push(res[key].seats[i])
-          this.changeSeatColor(res[key].seats[i])
+    console.log(busid, key)
+    this.subscription = this.BusService.getFillupseat(key, busid)
+      .subscribe(res => {
+        for (key in res) {
+          for (let i in res[key].seats) {
+            this.fillupSeat.push(res[key].seats[i])
+            this.changeSeatColor(res[key].seats[i])
+          }
         }
-      }
-    })
+      })
   }
 
-  changeSeatColor(seatNo){
-    let id= document.getElementById(seatNo)
-    id.innerHTML=`  <img src="../assets/img/bookseat.png">`
-    id.removeEventListener("click",this.Seat);
-    
-  
+  changeSeatColor(seatNo) {
+    let id = document.getElementById(seatNo)
+    id.innerHTML = `  <img src="assets/img/bookseat.png">`
+    id.removeEventListener("click", this.Seat);
+
+
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-} 
+}
 

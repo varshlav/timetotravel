@@ -71,7 +71,7 @@ table {
 
 
 .select-bus {
-    background: url(./assets/img/slider.jpg) ;
+    background: url(assets/img/slider.jpg) ;
     background-size: cover;
 position: relative;
     min-height:300px
