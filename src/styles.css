@@ -158,16 +158,23 @@ position: relative;
 
         .ticket {
             border: 1px solid #ccc;
-    box-shadow: 1px 0px 9px 2px #ccc;
-    margin: 26px;
+            box-shadow: 1px 0px 9px 2px #ccc;
+            margin: 26px;
+            background: url(assets/img/ticketbckg.jpg);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-color: #7dec55;
+            background-blend-mode: lighten;
+            
         }
         .ticket table {
-            border: none
+            border: 1px solid black;
         }
+
+
 
         .ticket table thead {
             border: none;
-            background: #FCFCE0;
             font-weight: bold
         }
         .ticket  table td {
@@ -175,11 +182,17 @@ position: relative;
         }
 
         .ticket table.ps_details {
-            border: 1px solid #ccc;
+            border: 1px solid black;
+            
+        }
+
+        .ticket table.ps_details tr th{
+            border-top: 1px solid black;
+
         }
 
         .ticket table.ps_details span {
-            color: #424242;
+            color: black;
             font-size: 12px;
             padding: 0 6px;
         }

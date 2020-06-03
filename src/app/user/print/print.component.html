@@ -1,11 +1,11 @@
 <div class="container" *ngIf="createTicket">
     <div class="row justify-content-center">
       <div class="col-md-10 ticket ">
-          <h6 class="text-center pt-3 pb-3 "> Online Reservation      </h6>
+          <h6 class="text-center pt-3 pb-3 "> Varshney Travels - Online Ticket      </h6>
           <table class="table ">
      <thead>
-      <td class="text-capitalize">{{createTicket.journey.journey_route.leaving_form}} <span> <i class="fas fa- arrow-right"></i></span> {{createTicket.journey.journey_route.going_to}}</td>
-      <td> {{createTicket.journey.journey_route.date}}</td>
+      <td class="text-capitalize">{{createTicket.journey.journey_route.leaving_form}} <span> <i class="fas fa- arrow-right">&#8594;</i></span> {{createTicket.journey.journey_route.going_to}}</td>
+      <td> Date of Journey : {{createTicket.journey.journey_route.date}}</td>
       <td></td>
      </thead>  
           </table>
@@ -41,7 +41,7 @@
               <td>{{createTicket.journey.bus.name}} <br>
               <span> <em>Coach Type: </em>{{createTicket.journey.bus.coach_type}} </span>
               </td>
-              <td>Before 30 mints</td>
+              <td>Before 30 minutes</td>
               <td>{{createTicket.journey.bus.time}}</td>
             </tr>
           </table>

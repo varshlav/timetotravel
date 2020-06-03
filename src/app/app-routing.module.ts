@@ -12,6 +12,7 @@ const routes: Routes = [
 {path:'search',component:BusSearchResultComponent},
 {path:'user-form',component:UserFormComponent},
 {path:'print',component:PrintComponent},
+{path:'**',component:SelectBusComponent}
 ];
 
 @NgModule({
