@@ -18,6 +18,7 @@ import { PrintComponent } from './user/print/print.component';
 import { SelectBusService } from './user/services/selectBus.service';
 import { BookingService } from './user/services/booking.service';
 import { UserService } from './user/services/user.service';
+import { FilterPipe } from './filter.pipe';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { UserService } from './user/services/user.service';
     BusSearchResultComponent,
     SelectSeatComponent,
     UserFormComponent,
-    PrintComponent
+    PrintComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

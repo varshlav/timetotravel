@@ -12,49 +12,59 @@ import { Router } from '@angular/router';
   styleUrls: ['./bus-search-result.component.css']
 })
 
-export class BusSearchResultComponent implements OnInit,OnDestroy {
-  subscription:Subscription;
-  buses:Bus[]=[];
+export class BusSearchResultComponent implements OnInit, OnDestroy {
+  subscription: Subscription;
+  buses: Bus[] = [];
   modalRef: BsModalRef;
-  route=new Object();
-    constructor(
-      private BusService:SelectBusService,
-      private modalService: BsModalService,
-      private router:Router
-    ) { }
-  
-    ngOnInit() {
-      this.route=JSON.parse(localStorage.getItem("route"));
-      if(!this.route) {
-        this.router.navigate([''])
-      }
-     this.subscription= this.BusService.castId.subscribe(
-        res=>this.getAllBus(res)
-      )
+  route = new Object();
+  busSet = new Set();
+  typeSet = new Set();
+  selectedBus: string = '';
+  selectedType: string = '';
+
+  constructor(
+    private BusService: SelectBusService,
+    private modalService: BsModalService,
+    private router: Router
+  ) { }
+
+  ngOnInit() {
+    this.route = JSON.parse(localStorage.getItem("route"));
+    if (!this.route) {
+      this.router.navigate([''])
     }
-  
-    getAllBus(res){
-      let bus=new Object();
-      this.BusService.getBus(res)
+    this.subscription = this.BusService.castId.subscribe(
+      res => this.getAllBus(res)
+    )
+  }
+
+  getAllBus(res) {
+    let bus = new Object();
+    this.BusService.getBus(res)
       .subscribe(
-        res=>{
-          for(let key in res){
-            bus=res[key];
-            bus['$key']=key;
-           
-   
-         this.buses.push(bus as Bus);
-     
-  
+        res => {
+          for (let key in res) {
+            bus = res[key];
+            bus['$key'] = key;
+            this.buses.push(bus as Bus);
+            //console.log(bus);
+            this.busSet.add(bus['name']);
+            this.typeSet.add(bus['coach_type']);
           }
+          console.log("The data is "+this.buses.length);
+      
+          console.log(this.buses);
         }
-      )
-  
-    }
+      );
+
+     
+   
+
+  }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  
+
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
     // let journey={
@@ -62,11 +72,11 @@ export class BusSearchResultComponent implements OnInit,OnDestroy {
     //   bus_info:bus,
     //   seats:
     // }
-    
+
   }
-  closeModal (){
+  closeModal() {
     this.modalRef.hide();
   }
-  
-  }
-  
+
+}
+

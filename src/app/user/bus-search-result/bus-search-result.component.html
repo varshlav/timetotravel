@@ -11,13 +11,15 @@
              <p><b>Filter By</b></p>
            </div>
             <div class="form-group col-md-4">
-              <select name="" class="form-control form-control-sm" id="">
-                <option value="">By Bus</option>
+              <select name="" class="form-control form-control-sm" [(ngModel)]="selectedBus">
+                <option value="">Bus Name</option>
+                <option *ngFor="let bus of busSet" [value]="bus">{{bus}}</option>
               </select>
             </div>
             <div class="form-group col-md-4">
-                <select name="" class="form-control form-control-sm">
-                  <option value="">By Type</option>
+                <select name="" class="form-control form-control-sm" [(ngModel)]="selectedType">
+                  <option value="">Type</option>
+                  <option *ngFor="let actype of typeSet" [value]="actype">{{actype}}</option>
                 </select>
               </div>
          </div>
@@ -37,9 +39,8 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let b of buses">
+              <tr *ngFor="let b of buses | filter : selectedBus : selectedType" >
                 <td> <h6>{{b.name}}</h6></td>
-               
                 <td>{{b.time}}</td>
                 <td>{{b.coach_type}}</td>
                 <td>{{b.seat}}</td>

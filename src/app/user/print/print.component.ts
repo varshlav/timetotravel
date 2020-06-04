@@ -25,5 +25,8 @@ export class PrintComponent implements OnInit {
     }
   }
 
+  printPage(){
+    window.print();
+  }
 
 }

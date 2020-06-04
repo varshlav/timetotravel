@@ -1,0 +1,9 @@
+.barcode-img{
+    width: 160px;
+}
+
+div > p > a {
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+}

@@ -5,7 +5,8 @@ body {
 }
 
 .header-top {
-    background: #fff;
+    background: rgb(34,193,195);
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(45,94,253,1) 100%);
     border-top: 3px solid #5096ff;
 }
 .login {
@@ -20,6 +21,8 @@ body {
 }
 .header-top img {
     width: 100px;
+    border-radius: 50%;
+    border: 1px solid rgb(238, 167, 13);
 }
 ul {
     padding: 0;
@@ -195,4 +198,19 @@ position: relative;
             color: black;
             font-size: 12px;
             padding: 0 6px;
+        }
+
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            .ticket, .ticket * {
+                visibility: visible;
+                
+            }
+            .ticket div {
+                background: none;
+            }
         }
